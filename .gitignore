@@ -120,7 +120,7 @@ dmypy.json
 *.sqlite3
 
 # Output files
-output/ 
+output/summaries/
 
 # Data files
 data/
