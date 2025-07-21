@@ -17,6 +17,7 @@ def ev_count_by_year(conn):
         ORDER BY Year;
     """, conn)
 
+
 def ev_count_by_county(conn):
     return pd.read_sql_query("""
         SELECT County, COUNT(*) AS EV_Count
@@ -33,4 +34,14 @@ def avg_electric_range_by_make(conn):
         GROUP BY Make
         ORDER BY Avg_Range DESC
         LIMIT 10;
+    """, conn)
+    
+def ev_per_city_within_specific_county(conn):
+    return pd.read_sql_query("""
+        SELECT City, COUNT(*) AS Count
+        FROM ev_population
+        WHERE County IN ('King', 'Pierce', 'Snohomish', 'Spokane')
+        GROUP BY City
+        ORDER BY Count DESC
+        LIMIT 20;
     """, conn)
