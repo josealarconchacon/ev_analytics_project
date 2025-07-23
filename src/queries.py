@@ -45,3 +45,14 @@ def ev_per_city_within_specific_county(conn):
         ORDER BY Count DESC
         LIMIT 20;
     """, conn)
+    
+def ev_dist_by_type_and_cafv(conn):
+    return pd.read_sql_query("""
+        SELECT "Electric Vehicle Type",
+        "Clean Alternative Fuel Vehicle (CAFV) Eligibility",
+        COUNT(*) as Count,
+        ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) as Percentage
+        FROM ev_population
+        GROUP BY "Electric Vehicle Type", "Clean Alternative Fuel Vehicle (CAFV) Eligibility"
+        ORDER BY Count DESC;                        
+    """, conn)
