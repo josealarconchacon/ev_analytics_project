@@ -56,3 +56,17 @@ def ev_dist_by_type_and_cafv(conn):
         GROUP BY "Electric Vehicle Type", "Clean Alternative Fuel Vehicle (CAFV) Eligibility"
         ORDER BY Count DESC;                        
     """, conn)
+
+def top_ev_models_by_range(conn):
+    return pd.read_sql_query("""
+        SELECT 
+            Make,
+            Model,
+            AVG("Electric Range") as Avg_Range,
+            COUNT(*) as Model_Count
+        FROM ev_population
+        WHERE "Electric Range" > 0
+        GROUP BY Make, Model
+        ORDER BY Avg_Range DESC
+        LIMIT 15;
+    """, conn)
